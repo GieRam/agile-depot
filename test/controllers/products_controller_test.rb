@@ -10,6 +10,13 @@ class ProductsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_not_nil assigns(:products)
+    assert_select "h1", "Listing products"
+    assert_select 'img.list_image', true
+    assert_select 'td.list_actions' do
+      assert_select 'a', 'Show'
+      assert_select 'a', 'Edit'
+      assert_select 'a', 'Destroy'
+    end
   end
 
   test "should get new" do
