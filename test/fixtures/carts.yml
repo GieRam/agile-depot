@@ -5,7 +5,9 @@
 # below each fixture, per the syntax in the comments below
 #
 one: {}
+cart1: {}
+cart2: {}
+cart3: {}
 # column: value
 #
-two: {}
 #  column: value
