@@ -1,8 +1,8 @@
 class LineItemsController < ApplicationController
   include CurrentCart
-  before_action :set_cart, only: [:create]
+  before_action :set_cart, only: [:create, :destroy, :decrement]
 
-  before_action :set_line_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_line_item, only: [:show, :edit, :update, :destroy, :decrement]
 
   # GET /line_items
   # GET /line_items.json
@@ -33,7 +33,9 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       if @line_item.save
         session[:counter] = 0
-        format.html { redirect_to @line_item.cart, notice: 'Line item was successfully added' }
+        format.html { redirect_to store_url, notice: 'Line item was successfully added' }
+        format.js { @current_item = @line_item }
+
         format.json { render action: 'show', status: :created, location: @line_item }
       else
         format.html { render action: 'new', notice: 'Failed to create line item' }
@@ -61,8 +63,23 @@ class LineItemsController < ApplicationController
   def destroy
     @line_item.destroy
     respond_to do |format|
-      format.html { redirect_to @line_item.cart, notice: 'Line item successfully deleted' }
+      format.html { redirect_to store_url, notice: 'Line item successfully deleted' }
+      format.js
       format.json { head :no_content }
+    end
+  end
+
+  def decrement
+    if @line_item.quantity > 1
+      @line_item.quantity -= 1
+      @line_item.save
+    else
+      @line_item.destroy
+    end
+    respond_to do |format|
+      format.html { redirect_to store_url, notice: 'Line item successfully removed' }
+      format.js
+      format.json { head :no_content }      
     end
   end
 
@@ -76,5 +93,5 @@ class LineItemsController < ApplicationController
     def line_item_params
       params.require(:line_item).permit(:product_id)
     end
-
+    
 end

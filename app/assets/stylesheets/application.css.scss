@@ -47,6 +47,30 @@
 		width: 13em;
 		background: #141;
 
+		input {
+			font-size: small;
+		}
+
+		#cart {
+			font-size: smaller;
+			color: white;
+		
+			table {
+				border-top: 1px dotted #595;
+				border-bottom: 1px dotted #595;
+				margin-bottom: 10px;
+			}
+
+			a { 
+				text-decoration: none;
+				color: white;
+			}
+			a:hover {
+				background-color: transparent;
+				color: red;
+			}
+		}
+
 		ul {
 			padding: 0;
 			li {

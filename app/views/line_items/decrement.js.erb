@@ -1,0 +1,4 @@
+$("#cart").html("<%= j render(@cart) %>")
+<% if @cart.line_items.empty? %>
+  $("#cart").hide("blind",1000)
+<% end %>
